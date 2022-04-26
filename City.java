@@ -21,12 +21,16 @@ public class City {
     public Candy findCityCandy(String candy) {
         Candy foundCityCandy = null;
         for (Candy i : cityCandy) {
-            if (i.name == candy) {
-                foundCityCandy = i;
-            }
+            foundCityCandy = i.name == candy ? i : foundCityCandy;
         }
         return foundCityCandy;
     }
+
+
+
 }
+
+
+
 
 

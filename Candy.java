@@ -1,9 +1,9 @@
 package de.materna.game;
 
 public class Candy {
-    String name;
-    int amount;
-    int streetPrice;
+    public String name;
+    public int amount;
+    public int streetPrice;
 
     //Candy constructor
     Candy(String candyName) {

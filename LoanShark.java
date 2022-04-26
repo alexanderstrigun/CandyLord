@@ -2,30 +2,27 @@ package de.materna.game;
 
 public class LoanShark {
 
-    int maxBorrow = 9999;
-    int minBorrow = 1000;
-    int debtClaim;
-    int daysUntilCollect;
-    int grantedDays=2;
-    int damageToNonPayer=50;
+    private int maxBorrow = 9999;
+    private int minBorrow = 1000;
+    public int debtClaim;
+    public int daysUntilCollect;
+    private int grantedDays = 2;
+    private int damageToNonPayer = 50;
     double interestRate = 0.05;
 
 
     //LoanShark methods
-    public void lendMoney(Player player) {
+    public int lendMoney(Player player) {
+        System.out.println("how much do you need?");
         int amount = StaticUIMethods.getUserInput();
-        if (amount < this.minBorrow) {
-            System.out.println("thats not worth the effort");
-        } else if (amount > this.maxBorrow) {
-            System.out.println("to much of a risk, man");
-        } else if(amount+this.debtClaim>=this.maxBorrow) {
-            System.out.println("no way, you already owe me " +debtClaim);
-        } else {
+        int i = 0;
+        i = amount < this.minBorrow ? 13 : amount > this.maxBorrow ? 14 : amount + this.debtClaim >= this.maxBorrow ? 15 : 16;
+        if (i == 16) {
             updateDuePayDay(amount);
             this.debtClaim += amount;
             player.cash += amount;
-            System.out.println("you owe me " + this.debtClaim + ".\n Payback in " + this.daysUntilCollect + " days.");
         }
+        return i;
     }
 
 
@@ -48,10 +45,11 @@ public class LoanShark {
 
 
     public void updateDuePayDay() {
-        daysUntilCollect = debtClaim > 0 && daysUntilCollect > 0 ? daysUntilCollect - 1 : daysUntilCollect;
+        daysUntilCollect = debtClaim > 0 && daysUntilCollect > 0 ? daysUntilCollect - 1 :
+                debtClaim == 0 ? 0 : 0;
     }
 
-    public void updatePlayerHealthAndGiveDelay(Player player) {
+    public void updatePlayerHealthAndGrantDelay(Player player) {
         player.health = debtClaim > 0 && daysUntilCollect == 0 ? player.health - damageToNonPayer : player.health;
         this.daysUntilCollect = debtClaim > 0 && daysUntilCollect == 0 ? this.daysUntilCollect + grantedDays : this.daysUntilCollect;
     }
